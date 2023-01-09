@@ -1,0 +1,20 @@
+sudo tar –xf pig-0-17.0.tar.gx
+mv pig-0-17-0 /home/Hadoop/pig
+
+.bashrc
+export PIG_HOME=/home/hadoop/pig
+export PATH =$PATH:/home/hadoop/pig/bin
+export PIG_CLASSPATH=$HADOOP_HOME/conf
+source
+
+nano /home/hadoop/textfile.txt
+random contents
+
+pig –version
+pig –x local
+
+lines = LOAD '/home/hadoop/textfile.txt' AS (line:chararray);
+words = FOREACH lines GENERATE FLATTEN(TOKENIZE(line)) as word;
+grouped = GROUP words BY word;
+wordcount = FOREACH grouped GENERATE group, COUNT(words);
+DUMP wordcount;
